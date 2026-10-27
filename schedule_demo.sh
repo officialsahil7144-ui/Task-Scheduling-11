@@ -1,24 +1,9 @@
-#!/usr/bin/env bash
-set -e
-
-WORK="schedule_lab"
-mkdir -p "$WORK"
-
-echo "Scheduling Demonstration"
-echo "Current date and time:"
-date
-
-echo
-echo "Cron service status:"
-if command -v systemctl >/dev/null 2>&1; then
-    systemctl is-active cron || true
-else
-    echo "systemctl is not available"
-fi
-
-echo
-echo "Current user's scheduled cron jobs:"
-crontab -l 2>/dev/null || echo "No crontab entries found"
-
-echo
-echo "Scheduling demo completed."
+#!/usr/bin/env bash 
+set -e 
+mkdir -p "$HOME/linux_schedule_lab" 
+printf 'Task ran at %s\n' "$(date '+%F %T')" >> "$HOME/linux_schedule_lab/run.log" 
+echo "A test task entry was added." 
+tail -n 1 "$HOME/linux_schedule_lab/run.log" 
+echo 
+echo "Example cron entry (edit with crontab -e):" 
+echo '*/5 * * * * $HOME/linux_schedule_lab/task.sh'  
